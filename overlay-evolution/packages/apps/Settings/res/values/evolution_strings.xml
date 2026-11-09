@@ -7,6 +7,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <!-- About phone > Model: shown for unofficial builds -->
-    <string name="build_maintainer_summary" translatable="false">MkProMVP</string>
+    <string name="build_maintainer_summary" translatable="false">MkVenomPro</string>
     <string name="build_maintainer_donate_url" translatable="false"></string>
 </resources>
