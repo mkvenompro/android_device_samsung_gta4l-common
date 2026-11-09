@@ -269,3 +269,6 @@ PRODUCT_PACKAGES += \
     libwifi-hal-qcom \
     wpa_supplicant \
     wpa_supplicant.conf
+
+# Dolby
+$(call inherit-product, hardware/dolby/dolby.mk)
