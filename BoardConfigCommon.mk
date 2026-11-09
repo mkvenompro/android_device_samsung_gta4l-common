@@ -197,9 +197,17 @@ BOARD_ROOT_EXTRA_SYMLINKS += /vendor/bt_firmware:/bt_firmware
 VENDOR_SECURITY_PATCH := 2024-06-01
 
 # SELinux
-include device/lineage/sepolicy/libion/sepolicy.mk
-include device/qcom/sepolicy_vndr/SEPolicy.mk
+# These live in LineageOS repositories that are not part of the GrapheneOS
+# manifest, so they are optional here. Sync them via grapheneos/local_manifest.xml
+# for full QCOM/ION policy coverage.
+-include device/lineage/sepolicy/libion/sepolicy.mk
+-include device/qcom/sepolicy_vndr/SEPolicy.mk
 BOARD_VENDOR_SEPOLICY_DIRS += $(COMMON_PATH)/sepolicy/vendor
+
+# LineageOS health HAL policy (lineage_* products only)
+ifneq ($(filter lineage%,$(TARGET_PRODUCT)),)
+BOARD_VENDOR_SEPOLICY_DIRS += $(COMMON_PATH)/sepolicy/vendor-lineage
+endif
 PRODUCT_PRIVATE_SEPOLICY_DIRS += $(COMMON_PATH)/sepolicy/private
 PRODUCT_PUBLIC_SEPOLICY_DIRS += $(COMMON_PATH)/sepolicy/public
 BUILD_BROKEN_VENDOR_PROPERTY_NAMESPACE := true
