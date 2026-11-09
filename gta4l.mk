@@ -270,5 +270,8 @@ PRODUCT_PACKAGES += \
     wpa_supplicant \
     wpa_supplicant.conf
 
+# Dolby: use Dolby's DAX config instead of the stock Samsung one
+PRODUCT_COPY_FILES := $(filter-out vendor/samsung/gta4l-common/proprietary/vendor/etc/dolby/dax-default.xml:%,$(PRODUCT_COPY_FILES))
+
 # Dolby
 $(call inherit-product, hardware/dolby/dolby.mk)
