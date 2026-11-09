@@ -42,8 +42,13 @@ TARGET_SCREEN_WIDTH := 1200
 
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
-    $(LOCAL_PATH)/overlay \
+    $(LOCAL_PATH)/overlay
+
+# LineageOS-only overlays (skipped for AOSP / GrapheneOS targets)
+ifneq ($(filter lineage%,$(TARGET_PRODUCT)),)
+DEVICE_PACKAGE_OVERLAYS += \
     $(LOCAL_PATH)/overlay-lineage
+endif
 
 PRODUCT_ENFORCE_RRO_TARGETS += *
 
@@ -88,8 +93,11 @@ PRODUCT_COPY_FILES += \
     frameworks/av/services/audiopolicy/config/default_volume_tables.xml:$(TARGET_COPY_OUT_VENDOR)/etc/default_volume_tables.xml \
     frameworks/av/services/audiopolicy/config/r_submix_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/r_submix_audio_policy_configuration.xml
 
+# LineageOS-only minijail variant (AOSP ships its own libavservices_minijail)
+ifneq ($(filter lineage%,$(TARGET_PRODUCT)),)
 PRODUCT_PACKAGES += \
     libavservices_minijail_vendor
+endif
 
 # Camera
 $(call soong_config_set_bool,samsungCameraVars,needs_sec_get_cam_pos_v2,true)
@@ -98,8 +106,13 @@ PRODUCT_PACKAGES += \
     android.hardware.camera.provider-service.samsung
 
 # Charger
+ifneq ($(filter lineage%,$(TARGET_PRODUCT)),)
 PRODUCT_PACKAGES += \
     charger_res_images_vendor
+else
+PRODUCT_PACKAGES += \
+    charger_res_images
+endif
 
 # Common init scripts
 PRODUCT_PACKAGES += \
@@ -158,7 +171,8 @@ PRODUCT_PACKAGES += \
 
 $(call soong_config_set,samsungVars,target_keymaster4_library,//vendor/samsung/gta4l-common:libskeymaster4device)
 
-# Lineage Health
+# Lineage Health (LineageOS-only package)
+ifneq ($(filter lineage%,$(TARGET_PRODUCT)),)
 PRODUCT_PACKAGES += \
     vendor.lineage.health-service.default
 
@@ -169,6 +183,7 @@ $(call soong_config_set_bool,lineage_health,charging_control_supports_bypass,fal
 $(call soong_config_set,lineage_health,fast_charge_node,/sys/class/sec/switch/afc_disable)
 $(call soong_config_set,lineage_health,fast_charge_value_none,1)
 $(call soong_config_set,lineage_health,fast_charge_value_fast_charge,0)
+endif
 
 # Media
 PRODUCT_COPY_FILES += \
