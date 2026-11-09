@@ -39,4 +39,4 @@
 /sys/devices/virtual/sec/switch(/.*)? u:object_r:sysfs_sec_switch:s0
 
 # Watchdog device nodes (written by init.gta4l.rc to disable the watchdog)
-/dev/watchdog[0-9]+\tu:object_r:watchdog_device:s0
+/dev/watchdog[0-9]+	u:object_r:watchdog_device:s0
